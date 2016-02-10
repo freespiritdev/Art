@@ -1,14 +1,14 @@
 var User = require('mongoose').model('User'), 
     passport = require('passport');
 
-var getErrorMessage = function(err) {
+var getErrMsg = function(err) {
   var message = '';
 
   if (err.code) {
     switch (err.code) {
       case 11000:
       case 11001:
-        message = 'That username already exists';
+        message = 'That username is taken';
         break;
       default:
         message = 'Oops something went wrong';
@@ -52,7 +52,7 @@ exports.signup = function(req, res, next) {
 
     user.save(function(err) {
       if (err) {
-        var message = getErrorMessage(err);
+        var message = getErrMsg(err);
 
         req.flash('error', message);
         return res.redirect('/signup');
@@ -80,3 +80,5 @@ exports.requiresLogin = function(req, res, next) {
   }
   next();
 };
+
+exports
