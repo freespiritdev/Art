@@ -81,4 +81,11 @@ exports.requiresLogin = function(req, res, next) {
   next();
 };
 
-exports
+exports.hasAuthorization = function(req, res, next) {
+  if (req.article.creator.id !== req.user.id){
+    return res.status(403).send({
+      message: 'Not authorized'
+    });
+  }
+  next();
+};
